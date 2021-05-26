@@ -24,6 +24,8 @@ urlpatterns = (
         re_path(r"^$", include("pages.urls")),
         path("admin/", admin.site.urls),
         path("hotels/", include("hotels.urls")),
+        path("categories", include("categories.urls")),
+        path("flights", include("flights.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_DIR)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,1704 @@
+{% extends "layouts/base.html" %}
+{% block body_block %}
+<main class="page-main">
+  <nav class="breadcrumb-nav d-flex align-items-center" aria-label="breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="under" href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><span>Flights</span></li>
+      </ol>
+    </div>
+  </nav>
+  <div class="page-content">
+    <div class="container">
+      <div class="row">
+        <aside class="sidebar col-lg-3 order-1 order-lg-0">
+          <div class="sidebar__content js-sticky-top">
+            <div class="sidebar-filter modal card fade" id="sidebarFilter" tabindex="-1" role="dialog">
+              <button class="btn-toggle btn btn-light" type="button" data-dismiss="modal"><span
+                  class="icon-bar"></span></button>
+              <div class="modal-header bg-primary text-white">
+                <h4 class="modal-title justify-content-center justify-content-lg-between border-bottom-0"><span
+                    class="search-result mr-3">869 out of 1100</span>
+                  <button class="clear pointer" type="button"><i class="icon"><svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 510 510">
+                        <path
+                          d="M255 0C114.75 0 0 114.75 0 255s114.75 255 255 255 255-114.75 255-255S395.25 0 255 0zm127.5 346.8l-35.7 35.7-91.8-91.8-91.8 91.8-35.7-35.7 91.8-91.8-91.8-91.8 35.7-35.7 91.8 91.8 91.8-91.8 35.7 35.7-91.8 91.8 91.8 91.8z" />
+                      </svg></i></button>
+                </h4>
+              </div>
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <ul class="sidebar-filter">
+                      <li class="sidebar-filter__item border-bottom-0">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#sorting" data-toggle="collapse" role="button"><span>Sorting</span></a></h5>
+                        <div class="form-group"><span class="form-select">
+                            <select class="form-control select2 js-form-select" id="searchFlightType"
+                              name="flight_type">
+                              <option value="Price (Lowest)">Price (Lowest)</option>
+                              <option value="Price (Highest)">Price (Highest)</option>
+                              <option value="Duration (Shortest)">Duration (Shortest)</option>
+                              <option value="Duration (Longest)">Duration (Longest)</option>
+                              <option value="Departure (Earliest)">Departure (Earliest)</option>
+                              <option value="Departure (Earliest)">Departure (Earliest)</option>
+                              <option value="Departure (Latest)">Departure (Latest)</option>
+                              <option value="Arrival (Earliest)">Arrival (Earliest)</option>
+                              <option value="Arrival (Latest)">Arrival (Latest)</option>
+                            </select></span>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#price" data-toggle="collapse" role="button"><span>Price range</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="price">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">0 - 99 €</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">100 - 299 €</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">300 - 599 €</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">600 - 999€</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">1000 € +</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#transplant" data-toggle="collapse" role="button"><span>Transplant</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="transplant">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Direct flights only</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">1 Stop</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">2 Stop</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">3 Stop</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#airlines" data-toggle="collapse" role="button"><span>Airlines</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="airlines">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">American Airlines (16) $1,919</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Cathay Pacific (15) $1,241</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Delta (10) $1,924</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Air France (7) $1,250</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">JetBlue Airways (6) $704</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">China Eastern Airlines (5) $904</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Korean Air (5) $1,887</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Singapore Airlines (5) $704</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Finnair (4) $2,199</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#alliances" data-toggle="collapse" role="button"><span>Alliances</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="alliances">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">One World</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Sky Team</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Star Alliance</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#departure" data-toggle="collapse" role="button"><span>Departure times</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="departure">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Lowest fare</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Morning</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Midday</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Afternoon</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Evening</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#class" data-toggle="collapse" role="button"><span>Class</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="class">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">First class</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Business</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Economy/Coach</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Premium economy</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#stops" data-toggle="collapse" role="button"><span>Stops</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="stops">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Nonstop (1)</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">1 Stop (32) $1199</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">2+ Stops (10)</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#period" data-toggle="collapse" role="button"><span>Travel time</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="period">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Early Morning (12:00am - 4:59am)</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Morning (5:00am - 11:59am)</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Afternoon (12:00pm - 5:59pm)</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">Evening (6:00pm - 11:59pm)</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="sidebar-filter__item">
+                        <h5 class="sidebar-filter__title"><a
+                            class="sidebar-filter__toggle d-flex justify-content-between align-items-center"
+                            href="#paymentFees" data-toggle="collapse" role="button"><span>Payment Fees</span><i
+                              class="fa fa-angle-down"></i></a></h5>
+                        <div class="collapse show" id="paymentFees">
+                          <div class="sidebar-filter__content">
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">The basic fee covers one class for EUR 850.</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">The fee for the second class of goods and services
+                                is EUR 50.</span>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                              <input class="custom-control-input" type="checkbox" /><span
+                                class="custom-control-label pointer">The fee for three or more classes is EUR 150 for
+                                each class.</span>
+                            </label>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <div class="col-lg-9">
+          <div class="row">
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">235 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">278 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">315 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">694 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">235 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">278 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">315 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">694 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">235 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">278 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">315 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">694 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">235 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">278 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">British Airways</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-en.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">06:50</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">2 Stop</div>
+                          <div class="col-7 col-md-12">CGN, VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">18h. 20m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">315 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin flight-item-->
+            <div class="list-flight-item col-12">
+              <div class="flight-card card">
+                <div class="row align-items-center flex-md-nowrap">
+                  <div class="flight-card__row col-12 col-md text-center px-md-0">
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-fr.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Air France</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">08:15</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">MOS</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">16:00</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">13h. 45m.</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1"
+                                src="/static/img/air-br.jpg" alt="#" /></span></div>
+                          <div class="col-7 col-md-12 fz-mdall">Several companies</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">13:05</div>
+                          <div class="col-7 col-md-12">MIL</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="title col-5 col-md-12">1 Stop</div>
+                          <div class="col-7 col-md-12">VKO</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column text-md-right">
+                          <div class="title col-5 col-md-12">07:10</div>
+                          <div class="col-7 col-md-12">KJA</div>
+                        </div>
+                      </div>
+                      <div class="list-group-item">
+                        <div class="row d-md-inline-flex flex-md-column">
+                          <div class="col-7 col-md-12 ml-auto text-nowrap">17h. 50m.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                    <div class="list-group-item text-center p-md-0">
+                      <div class="row justify-content-center align-items-center flex-md-column">
+                        <div class="col-5 col-md-12 mb-md-3">
+                          <div class="total text-nowrap">694 €</div>
+                        </div>
+                        <div class="col-7 col-md-12"><a class="btn btn-secondary btn--round" href="#" role="button">book
+                            now</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end flight-item-->
+            <!-- begin load items-->
+            <div class="flight-content__more col-12 d-flex justify-content-center mt-4">
+              <button class="btn btn-secondary btn--round btn-load" type="button">Show more<i class="fa fa-spin"></i>
+              </button>
+            </div>
+            <!-- end load items-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-nav btn-nav--up js-scroll-up" type="button"><i
+        class="fa fa-angle-up"></i></button>
+  </div>
+</main>
+{% endblock %}
